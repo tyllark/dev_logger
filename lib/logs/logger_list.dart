@@ -9,13 +9,13 @@ class LoggerList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
-      listenable: DevLogger.instance,
+      listenable: Logger.instance,
       builder: (context, child) {
         return ListView.separated(
-          itemCount: DevLogger.instance.logs.length,
+          itemCount: Logger.instance.logs.length,
           separatorBuilder: (context, index) => const Divider(),
           itemBuilder: (context, index) {
-            final log = DevLogger.instance.logs[index];
+            final log = Logger.instance.logs[index];
             return GestureDetector(
               onTap: () => _copyToClipboard(log.message),
               child: ListTile(
