@@ -1,10 +1,11 @@
-
 import 'package:dev_logger/logs/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class LoggerList extends StatelessWidget {
-  const LoggerList({super.key});
+  final bool reverse;
+
+  const LoggerList({super.key, this.reverse = false});
 
   @override
   Widget build(BuildContext context) {
@@ -12,6 +13,7 @@ class LoggerList extends StatelessWidget {
       listenable: Logger.instance,
       builder: (context, child) {
         return ListView.separated(
+          reverse: reverse,
           itemCount: Logger.instance.logs.length,
           separatorBuilder: (context, index) => const Divider(),
           itemBuilder: (context, index) {
