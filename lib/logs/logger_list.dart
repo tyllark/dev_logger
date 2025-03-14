@@ -56,6 +56,8 @@ class _LoggerListState extends State<LoggerList> {
   }
 
   void _onLogAdded() {
+    if(!mounted) return;
+    
     if (scrollController.position.pixels !=
         scrollController.position.maxScrollExtent) {
       return;
