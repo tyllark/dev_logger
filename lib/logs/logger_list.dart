@@ -42,7 +42,7 @@ class _LoggerListState extends State<LoggerList> {
                 title: Text(
                   '${_dateFormatter.format(log.timestamp)} - ${log.action}',
                 ),
-                subtitle: Text(log.message),
+                subtitle: log.message == null ? null : Text(log.message!),
               ),
             );
           },
@@ -51,13 +51,15 @@ class _LoggerListState extends State<LoggerList> {
     );
   }
 
-  Future<void> _copyToClipboard(String text) async {
+  Future<void> _copyToClipboard(String? text) async {
+    if (text == null) return;
+
     await Clipboard.setData(ClipboardData(text: text));
   }
 
   void _onLogAdded() {
-    if(!mounted) return;
-    
+    if (!mounted) return;
+
     if (scrollController.position.pixels !=
         scrollController.position.maxScrollExtent) {
       return;

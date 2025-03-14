@@ -11,29 +11,32 @@ class Logger extends ChangeNotifier {
 
   Logger._();
 
-  static void log(String action, Object? message) {
-    Logger.instance.logMessage(action, message);
+  static void log({required String action, Object? message}) {
+    Logger.instance.logMessage(action: action, message: message);
   }
 
-  void logMessage(String action, Object? message) {
-    final formattedMessage = _formatMessage(message.toString());
+  void logMessage({required String action, Object? message}) {
+    final formattedMessage = _formatMessage(message);
 
     // ignore: avoid_print
     print('Logger - $action');
     // ignore: avoid_print
     print('Logger - $formattedMessage');
-    final logEntry = LogEntry(action, formattedMessage);
+    final logEntry = LogEntry(action: action, message: formattedMessage);
 
     _logs.add(logEntry);
     notifyListeners();
   }
 
   static final _jsonEncoder = JsonEncoder.withIndent('   ');
-  String _formatMessage(String message) {
+  String? _formatMessage(Object? message) {
+    if (message == null) return null;
+    final text = message.toString();
+
     try {
-      return _jsonEncoder.convert(json);
+      return _jsonEncoder.convert(text);
     } catch (_) {
-      return message;
+      return text;
     }
   }
 }
